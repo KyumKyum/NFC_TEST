@@ -8,7 +8,7 @@ import javax.smartcardio.CommandAPDU
 import javax.smartcardio.ResponseAPDU
 
 //* CommandManager
-class ACR122UCommandManager(
+open class ACR122UCommandManager(
     private val card: Card
 ): DefaultManager() {
 
@@ -51,5 +51,21 @@ class ACR122UCommandManager(
         }
     }
 
+    /*
+    * Function: verifyResp (protected)
+    * Param: List<String>
+    * Return Type: boolean
+    *
+    * Description: Verifies the response of the NFC.
+    * */
+    protected fun isSuccessful(resp: List<String>): Boolean {
+        val code: List<String> = resp.takeLast(2);
+        val sw1: String = code[0]
+        val sw2: String = code[1]
+        //* 90 00: Success
+        //* 63 00: Failed
+        //* 6A 81: Not Supported
+        return (sw1 == "90") && (sw2 == "00")
+    }
 
 }
