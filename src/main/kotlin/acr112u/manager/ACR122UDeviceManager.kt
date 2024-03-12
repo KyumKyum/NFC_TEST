@@ -1,16 +1,19 @@
-package acr112u;
+package acr112u.manager;
 
-import exception.DefaultExceptionHandler
+import acr112u.exception.DefaultExceptionHandler
 import java.lang.Exception
 import javax.smartcardio.*;
 
+//* Author: Jay Lim
+/* *******************************************PLEASE READ THIS*******************************************
+ * This device manager is developed to handle 'ONLY ONE DEVICE' per instance. (ex: by lazy will return only firstly initialized terminal)
+ * Connecting new devices or change into new reader device will require to generate new DeviceManager Instance.
+ */
 
-class ACR122UDeviceManager{
+class ACR122UDeviceManager: DefaultManager(){
     //* TODO: Need to encapsulate these with further development
     //* TODO: All field variables need to be private
     private lateinit var NFCCardTerminal: CardTerminal; //* Lateinit: This must be initialized for further operations.
-    private val defaultExceptionHandler: DefaultExceptionHandler = DefaultExceptionHandler(); //* Excpetion Handler
-
     //* Read-only field for terminal
     //* Return initialized terminal
     val terminal: CardTerminal? by lazy {
@@ -18,10 +21,9 @@ class ACR122UDeviceManager{
         else {
             println("❗️FATAL ERROR: Terminal has not been initialized!!")
             null
-    } }
+        }
+    }
 
-    //val logger: Logger = Logger.getLogger()
-    //* Add Util Class
 
     /*
     * Function: connectDevice
@@ -36,10 +38,12 @@ class ACR122UDeviceManager{
 
         try{
             for(terminal: CardTerminal in cardTerminalList){
-                if(terminal.name.contains("ACR122")){
-                    //* DEVICE FOUND!!
-                    NFCCardTerminal = terminal;
-                    println("✨Device Connected!!✨ Device name: ${terminal.name}")
+                if(terminal.name.contains("ACR122")){ //* DEVICE FOUND!!
+
+                    //* 💫 Initialization Code for lateinit NFCCardTerminal💫
+                    NFCCardTerminal = terminal
+
+                    println("✨ Device Found!! Device name: ${terminal.name}")
                     return true //* No need to search further.
                 }
             }
@@ -54,34 +58,7 @@ class ACR122UDeviceManager{
     }
 
     /*
-    * Function: connectCard
-    * Return Type: Boolean
-    *
-    * Description: Returns boolean if the card is connected to ACR122U Reader/Writer
-    * */
-//    fun connectCard(protocol: String):Boolean {
-//        if(! this::NFCCardTerminal.isInitialized) throw Exception("TerminalNotInitializedException");
-//        try{
-//            if(!NFCCardTerminal.isCardPresent){
-//                println("Cannot find any connected card on the device.");
-//                return false;
-//            }
-//
-//            val connectionProtocol: String = if("" == protocol) "*" else protocol
-//
-//            NFCCard =
-//
-//            return true;
-//        }catch (e: Exception){
-//            defaultExceptionHandler.logMsg("Exception occurred while reading a card: ", e)
-//            return false;
-//        }
-//    }
-
-    //* Private Functions
-
-    /*
-    * Function: getDeviceList
+    * Function: getDeviceList (Private)
     * Return Type: List<CardTerminals>
 
     * Description: Returns list of card terminals conencted. (Device == ACR122u Reader List)
@@ -90,7 +67,7 @@ class ACR122UDeviceManager{
         val cardTerminals: CardTerminals = TerminalFactory.getDefault().terminals()
 
         if(cardTerminals.list().isNullOrEmpty()) {
-            println("No Devices detected");
+            println("❌ No Devices detected.");
             return null;
         }
         return cardTerminals.list();
