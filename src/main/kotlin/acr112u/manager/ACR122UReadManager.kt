@@ -9,8 +9,6 @@ class ACR122UReadManager(
     private val card:Card
 ): ACR122UCommandManager(card) {
 
-    private val byteToStringConverter: ByteToStringConverter = ByteToStringConverter();
-
     /*
     * Function: readUID
     * Return Type: List<String>
@@ -25,5 +23,28 @@ class ACR122UReadManager(
         if (!isSuccessful(converted)) return null;
 
         return converted.subList(0,4);
+    }
+
+    /*
+    * Function: readBlock_16
+    * Param: Byte (from)
+    * Return Type: List<String>
+    *
+    * Description: Reads 16 byte of binaries from the given page.
+    * */
+
+    fun readBlock_16(block: Byte): List<String>? {
+        //* Send command to load auth key (default)
+
+        val readBlockCmd: ByteArray = CommandList.cmdRead16Byte
+        readBlockCmd[3] = block
+
+        val resp: ByteArray = sendCommand(readBlockCmd)
+        val converted = byteToStringConverter.convert(resp);
+
+        if (converted.isEmpty()) return null
+        if(!isSuccessful(converted)) return null
+
+        return converted.subList(0, 16);
     }
 }

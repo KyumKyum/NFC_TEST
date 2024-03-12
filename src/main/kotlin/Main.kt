@@ -1,3 +1,4 @@
+import acr112u.manager.ACR122UAuthManager
 import acr112u.manager.ACR122UCardManager
 import acr112u.manager.ACR122UDeviceManager
 import acr112u.manager.ACR122UReadManager
@@ -19,6 +20,16 @@ fun main(args: Array<String>) {
     if(!cardManager.connectCard("")) return
     val card: Card = cardManager.card ?: throw Exception("TODO")
 
-    val readManager: ACR122UReadManager = ACR122UReadManager(card);
+    val readManager: ACR122UReadManager = ACR122UReadManager(card)
+    val authManager: ACR122UAuthManager = ACR122UAuthManager(card)
     println(readManager.readUID())
+
+    authManager.loadDefaultAuthKey() //* Init
+
+    val block: Byte = 0x05.toByte()
+
+    if(authManager.authenticateBlock(block)) {
+        println(readManager.readBlock_16(block))
+    }
+
 }

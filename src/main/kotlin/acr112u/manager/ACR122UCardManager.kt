@@ -50,4 +50,11 @@ class ACR122UCardManager(
         }
     }
 
+    /*
+    * Function: loadAuthKey
+    * Return Type: Boolean
+    *
+    * Description: Returns true if it successfully loaded default key
+    * */
+
 }

@@ -11,8 +11,9 @@
 - [x] Card Manager
 - [x] Command Manager (boilerplating)
 - [x] Read Manager (boilerplating)
-- [ ] Wrtie Manager (boilerplating)
-- [ ] Implementing Required Commands
+- [x] Implementing Required Commands
   - [x] readUID
-  - [ ] readByteStreamData
+  - [x] read16byte
+- [ ] Wrtie Manager (boilerplating)
+
   - TODO...
