@@ -13,7 +13,7 @@
 - [x] Read Manager (boilerplating)
 - [x] Implementing Required Commands
   - [x] readUID
-  - [x] read16byte
-- [ ] Wrtie Manager (boilerplating)
-
-  - TODO...
+  - [x] readBlock_16
+- [x] Wrtie Manager (boilerplating)
+  - [x] writeBlock_16
+  - [x] resetBlock_16

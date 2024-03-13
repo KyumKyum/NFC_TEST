@@ -20,20 +20,20 @@ fun main(args: Array<String>) {
     val readManager: ACR122UReadManager = ACR122UReadManager(card)
     val writeManager: ACR112UWriteManager = ACR112UWriteManager(card)
     val authManager: ACR122UAuthManager = ACR122UAuthManager(card)
-    println(readManager.readUID())
+//    println(readManager.readUID())
 
     authManager.loadDefaultAuthKey() //* Init
 
     val block: Byte = 0x05.toByte()
 
-    if(authManager.authenticateBlock(block)) {
-        println(readManager.readBlock_16(block))
-    }
+//    if(authManager.authenticateBlock(block)) {
+//        println(readManager.readBlock_16(block))
+//    }
 
     val data: ByteArray = byteArrayOf(0xff.toByte(), 0x82.toByte(), 0x02.toByte(), 0x30.toByte(), 0x06.toByte(), 0xfa.toByte(), 0xd3.toByte())
 
     if(authManager.authenticateBlock(block)){
-        writeManager.writeBlock_16(block,data)
+        //writeManager.writeBlock_16(block,data)
         writeManager.resetBlock_16(block)
     }
 
