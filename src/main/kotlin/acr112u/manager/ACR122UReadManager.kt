@@ -1,6 +1,5 @@
 package acr112u.manager
 
-import acr112u.utils.ByteToStringConverter
 import javax.smartcardio.Card
 
 //* Read manager
@@ -27,7 +26,7 @@ class ACR122UReadManager(
 
     /*
     * Function: readBlock_16
-    * Param: Byte (from)
+    * Param: Byte (block)
     * Return Type: List<String>
     *
     * Description: Reads 16 byte of binaries from the given page.

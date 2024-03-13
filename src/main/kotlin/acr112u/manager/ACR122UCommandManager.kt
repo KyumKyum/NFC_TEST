@@ -36,9 +36,14 @@ open class ACR122UCommandManager(
 
 
         //* Command: Read Binary Block 16Byte
-        //* Command to read 16-byte binary block from give page
-        //* 4th block need to be parsed!
+        //* Command to read 16-byte binary block from given page
+        //* index 3: target
         val cmdRead16Byte: ByteArray = byteArrayOf(0xff.toByte(), 0xb0.toByte(), 0x00.toByte(), 0x00.toByte(), 0x10.toByte())
+
+        //* Command: Write Binary Block 16Byte
+        //* Command to write 16-byte binary block to given page
+        //* index 3: target
+        val cmdWrite16Byte: ByteArray = byteArrayOf(0xff.toByte(), 0xd6.toByte(), 0x00.toByte(), 0x00.toByte(), 0x10.toByte())
     }
 
     /*
